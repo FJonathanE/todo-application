@@ -4,7 +4,42 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>TODO-App</title>
   </head>
-  <body></body>
+  <body>
+    <div class="wrapper" id="wrapper">
+      <div class="heading-object" id="heading-object">
+        <h1 class="heading-1">~TODO~</h1>
+
+        <textarea
+          class="text-input"
+          id="text-input"
+          placeholder="Ein neues Todo-Element hinzufügen"
+          aria-controls="chat-messages"
+          aria-label="Ein neues Todo-Element hinzufügen"
+          aria-invalid="false"
+          autocorrect="off"
+          autocomplete="off"
+          spellcheck="true"
+          onkeypress="enterPress(event);"
+          rows="1"
+        ></textarea>
+        <button
+          type="button"
+          id="add-button"
+          class="add-button"
+          onclick="addTodo();"
+        >
+          Add
+        </button>
+
+        <a href="/pages/users.html">Klick mich mal!</a>
+      </div>
+
+      <div class="todo-list" id="todo-list"></div>
+    </div>
+
+    <script type="text/javascript" src="/assets/javascript/todo.js"></script>
+    <link type="text/css" rel="stylesheet" href="/assets/css/todo.css" />
+  </body>
 </html>

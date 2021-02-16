@@ -4,6 +4,7 @@ const port = 3000;
 
 app.set('view engine', 'ejs');
 app.use(express.json());
+app.use(express.static(__dirname + '/public'));
 
 app.get('/api/randomuuid', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
