@@ -45,7 +45,12 @@ app.get("/api/todos/:userid", (req, res) => {
 
 app.post("/api/todos/:userid", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
+
+  console.log("req.body");
+  console.debug(req.body);
   var todo = req.body.todoid + ";" + req.body.todo;
+
+  console.log(todo);
 
   connection.query(
     `SELECT * FROM todos WHERE userid = '${req.params.userid}'`,
@@ -91,7 +96,7 @@ app.delete("/api/todos/:userid/:todoid", (req, res) => {
       for (i = 0; i < todos.length; i++) {
         if (!(todos[i].split(";")[0] == req.params.todoid)) {
           if (newTodos !== "") {
-            newTodos = newTodos + "|" + todos[i];
+            newTodos = todos[i] + "|" + newTodos;
           }
         }
       }

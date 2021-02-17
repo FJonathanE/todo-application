@@ -6,18 +6,17 @@ window.addEventListener("load", (event) => {
   var todos = [];
 
   getRequest(`http://localhost:3000/api/todos/${userid}`, (responseText) => {
-    console.log(responseText);
-    console.log(JSON.parse(responseText).todos);
-
     todos = JSON.parse(responseText).todos.split("|");
 
     for (i = 0; i < todos.length; i++) {
-      console.log(id + " " + todo);
-
       var id = todos[i].split(";")[0];
       var todo = todos[i].split(";")[1];
 
-      addTodoManual(id, todo);
+      if (
+        !(todo == "" || id == "" || todo == "undefined" || id == "undefined")
+      ) {
+        addTodoManual(id, todo);
+      }
     }
   });
 });
@@ -39,12 +38,29 @@ function enterPress(event) {
 }
 
 function addTodo() {
-  if (document.getElementById("text-input").value == "") {
+  var textinput = document.getElementById("text-input").value;
+
+  if (textinput == "") {
     return;
   }
 
   getRequest("http://localhost:3000/api/randomuuid", (response) => {
-    addTodoManual(response, document.getElementById("text-input").value);
+    addTodoManual(response, textinput);
+
+    let todo = {
+      todo: textinput,
+      todoid: response,
+    };
+
+    console.log("Todo " + todo);
+    postRequest(
+      `http://localhost:3000/api/todos/${userid}`,
+      JSON.stringify(todo),
+      function() {
+        console.log(`Saved todo "${textinput}" with id "${response}"`);
+      }
+    );
+
     document.getElementById("text-input").value = "";
   });
 }
@@ -78,7 +94,12 @@ function removeFromTodo(id) {
   var todo = document.getElementById("todo " + id);
   todo.remove();
 
-  console.log("Removed todo with the id:" + id);
+  deleteRequest(
+    `http://localhost:3000/api/todos/${userid}/${id}`,
+    (response) => {
+      console.log("Removed todo with the id:" + id);
+    }
+  );
 }
 
 function getRequest(url, callback) {
@@ -93,12 +114,18 @@ function getRequest(url, callback) {
 
 function postRequest(url, body, callback) {
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-      callback(xmlhttp.responseText);
-  };
-
   xmlhttp.open("POST", url, true);
+
+  xmlhttp.onreadystatechange = function() {
+    console.log("onready handler");
+    if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {
+      callback(xmlhttp.responseText);
+    }
+  };
+  console.log(body);
+
+  xmlhttp.setRequestHeader("Content-Type", "application/json");
+
   xmlhttp.send(body);
 }
 
@@ -110,5 +137,6 @@ function deleteRequest(url, callback) {
   };
 
   xmlhttp.open("DELETE", url, true);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.send(null);
 }
