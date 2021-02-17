@@ -6,12 +6,18 @@ window.addEventListener("load", (event) => {
   var todos = [];
 
   getRequest(`http://localhost:3000/api/todos/${userid}`, (responseText) => {
-    todos = responseText.todos.split("|");
-  });
+    console.log(responseText);
+    console.log(JSON.parse(responseText).todos);
 
-  todos.forEach((element) => {
-    if (element.split(";")[1] != "") {
-      addTodoManual(element.split(";")[0], element.split(";")[1]);
+    todos = JSON.parse(responseText).todos.split("|");
+
+    for (i = 0; i < todos.length; i++) {
+      console.log(id + " " + todo);
+
+      var id = todos[i].split(";")[0];
+      var todo = todos[i].split(";")[1];
+
+      addTodoManual(id, todo);
     }
   });
 });
@@ -75,7 +81,7 @@ function removeFromTodo(id) {
   console.log("Removed todo with the id:" + id);
 }
 
-function getRequest(url, body, callback) {
+function getRequest(url, callback) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)

@@ -7,16 +7,30 @@
     <title>404: Not found</title>
   </head>
   <body>
-    <h1 id="header-1" class="header">404: Not found</h1>
+    <div id="wrapper" class="wrapper">
+      <form class="form">
+        <h1 id="header-1" class="header">404: Not found</h1>
 
-    <p class="information">
-      Sehr geehrter Nutzer, diese Seite gibt oder hat es nie gegeben.
-    </p>
-    <p class="todo-back-link">
-      <a href="http://localhost:3000/todo"
-        >Klicke hier um zur Todo-Seite zurück zu kehren...</a
-      >
-    </p>
+        <p class="information">
+          Sehr geehrter Nutzer, diese Seite gibt oder hat es nie gegeben.
+        </p>
+
+        <p class="information">
+          Wenn sie denken, dass dies ein Fehler ist, kontaktieren sie bitte
+          einen Administrator.
+        </p>
+
+        <p class="todo-back-link-paragraph">
+          <button
+            type="button"
+            onclick="location.href='http://localhost:3000/todo';"
+            class="todo-back-link-button"
+          >
+            <span class="todo-back-link-text">Todo-Seite</span>
+          </button>
+        </p>
+      </form>
+    </div>
 
     <link rel="stylesheet" href="/assets/css/404.css" />
   </body>
