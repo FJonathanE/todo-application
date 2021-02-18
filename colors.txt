@@ -1,0 +1,9 @@
+Menu: #191919
+Background: #34495e
+Textcolor: #686868
+Header: #dcdde1
+Button-Fond: Courier, monospace
+Button-Text-Color: #464646
+
+Button-Border: #2980b9
+Button-Border-Hover: #4cd137

@@ -11,29 +11,30 @@
       <div class="heading-object" id="heading-object">
         <h1 class="heading-1">~TODO~</h1>
 
-        <textarea
-          class="text-input"
-          id="text-input"
-          placeholder="Ein neues Todo-Element hinzufügen"
-          aria-controls="chat-messages"
-          aria-label="Ein neues Todo-Element hinzufügen"
-          aria-invalid="false"
-          autocorrect="off"
-          autocomplete="off"
-          spellcheck="true"
-          onkeypress="enterPress(event);"
-          rows="1"
-        ></textarea>
-        <button
-          type="button"
-          id="add-button"
-          class="add-button"
-          onclick="addTodo();"
-        >
-          Add
-        </button>
+        <p>
+          <button
+            type="button"
+            id="add-button"
+            class="add-button"
+            onclick="addTodo();"
+          >
+            <span class="add-button-text">Hinzufügen</span>
+          </button>
+        </p>
 
-        <a href="/pages/users.html">Klick mich mal!</a>
+        <p>
+          <textarea
+            class="text-input"
+            id="text-input"
+            placeholder="Ein neues Todo-Element hinzufügen"
+            aria-controls="chat-messages"
+            aria-label="Ein neues Todo-Element hinzufügen"
+            aria-invalid="false"
+            onkeypress="enterPress(event);"
+            spellcheck="false"
+            rows="1"
+          ></textarea>
+        </p>
       </div>
 
       <div class="todo-list" id="todo-list"></div>

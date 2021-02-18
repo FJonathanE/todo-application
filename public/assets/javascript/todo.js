@@ -54,7 +54,6 @@ function addTodo() {
       todoid: response,
     };
 
-
     postRequest(
       `http://localhost:3000/api/todos/${userid}`,
       JSON.stringify(todo),
@@ -78,11 +77,14 @@ function addTodoManual(id, inputtext) {
   var field = document.createElement("p");
   field.setAttribute("class", "todo-text");
 
-  var buttonText = document.createTextNode("Remove");
+  var buttonText = document.createTextNode("Entfernen");
+  var buttonParagraph = document.createElement("span");
   var button = document.createElement("button");
+  buttonParagraph.setAttribute("class", "remove-todo-text");
   button.setAttribute("class", "remove-todo");
   button.setAttribute("onclick", `removeFromTodo("${id}");`);
-  button.appendChild(buttonText);
+  buttonParagraph.appendChild(buttonText);
+  button.appendChild(buttonParagraph);
 
   field.appendChild(text);
   todo.appendChild(field);
@@ -119,12 +121,10 @@ function postRequest(url, body, callback) {
   xmlhttp.open("POST", url, true);
 
   xmlhttp.onreadystatechange = function() {
-    console.log("onready handler");
     if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {
       callback(xmlhttp.responseText);
     }
   };
-  console.log(body);
 
   xmlhttp.setRequestHeader("Content-Type", "application/json");
 
