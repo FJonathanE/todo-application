@@ -63,7 +63,11 @@ app.post("/api/todos/:userid", (req, res) => {
 
       var todos = results[0].todos;
 
-      todos = todos + "|" + todo;
+      if (todos != "") {
+        todos = todos + "|" + todo;
+      } else {
+        todos = todos + todo;
+      }
 
       console.log("NEW: " + todos);
 
@@ -95,14 +99,9 @@ app.delete("/api/todos/:userid/:todoid", (req, res) => {
 
       for (i = 0; i < todos.length; i++) {
         if (!(todos[i].split(";")[0] == req.params.todoid)) {
-          if (newTodos !== "") {
-            newTodos = todos[i] + "|" + newTodos;
-          }
+          newTodos = todos[i] + "|" + newTodos;
         }
       }
-
-      console.log("OLD: " + todos);
-      console.log("NEW: " + newTodos);
 
       res.send(newTodos);
 

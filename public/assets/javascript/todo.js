@@ -38,7 +38,9 @@ function enterPress(event) {
 }
 
 function addTodo() {
-  var textinput = document.getElementById("text-input").value;
+  let textinput = document.getElementById("text-input").value;
+
+  textinput = textinput.replace(/;/g, ":");
 
   if (textinput == "") {
     return;
@@ -52,7 +54,7 @@ function addTodo() {
       todoid: response,
     };
 
-    console.log("Todo " + todo);
+
     postRequest(
       `http://localhost:3000/api/todos/${userid}`,
       JSON.stringify(todo),
