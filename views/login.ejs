@@ -13,18 +13,18 @@
         <p>
           <input
             type="text"
-            name="input-username"
-            id="input-username"
-            class="input-username"
+            name="username"
+            id="username"
+            class="username"
             placeholder="Benutzername"
           />
         </p>
         <p>
           <input
             type="password"
-            name="input-password"
-            id="input-password"
-            class="input-password"
+            name="password"
+            id="password"
+            class="password"
             placeholder="Passwort"
           />
         </p>
@@ -36,13 +36,29 @@
             value="Einloggen"
           />
         </p>
-        <p class="information">
-          Wenn ein Account mit diesem Namen noch nicht existiert wird direkt ein
-          neuer erstellt.
+        <% if (!tried_login) { %>
+        <p class="error">
+          Du musst einen Nutzernamen und ein Passwort angeben.
         </p>
+        <% } else if (tried_login && !account_exists) { %>
+        <p class="error">Ein Account mit diesem Nutzernamen existiert nicht.</p>
+        <% } else if (tried_login && account_exists && !password_right) { %>
+        <p class="error">
+          Das Passwort für den angegebenen Benutzer ist falsch.
+        </p>
+        <% } else if (tried_login && account_exists && password_right) { %>
+        <p class="success">
+          Der Login-Vorgang war erfolgreich. Du kannst nun mit<a
+            href="http://localhost:3000/todo"
+            class="success"
+            >diesem Link</a
+          >zur Todo-Seite gelangen.
+        </p>
+        <% } %>
       </form>
     </div>
 
+    <script src="/assets/javascript/cookie_utils.js"></script>
     <link rel="stylesheet" href="assets/css/login.css" />
   </body>
 </html>

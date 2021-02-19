@@ -1,7 +1,13 @@
-const userid = "6b2b5953-9a70-4eae-b5da-a41776d39420";
+var userid = "unset";
 
 window.addEventListener("load", (event) => {
   console.log("Window loaded...");
+
+  console.log(document.cookie);
+
+  userid = getCookie("userid");
+
+  console.log("Userid: " + userid);
 
   var todos = [];
 
