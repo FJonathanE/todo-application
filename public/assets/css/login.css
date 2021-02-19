@@ -1,0 +1,93 @@
+body {
+  background-color: #34495e;
+}
+
+.wrapper {
+  text-align: center;
+
+  height: 100vh;
+  width: 100vw;
+}
+
+.form {
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+
+  background-color: #191919;
+  width: 30%;
+  height: 50%;
+
+  border-radius: 6px;
+  border-color: #191919;
+  border-style: solid;
+  border-width: 1px;
+
+  box-shadow: rgba(22, 36, 36, 0.76) 6px 6px;
+}
+.header {
+  text-align: center;
+  color: #dcdde1;
+}
+
+.input-password,
+.input-username {
+  background: none;
+  font-family: Courier, monospace;
+
+  height: 25px;
+  width: 200px;
+
+  outline: none;
+  padding: 5px;
+  color: #686868;
+  font-size: 15px;
+  text-align: center;
+
+  border-radius: 50px;
+  border-color: #2980b9;
+  border-width: 3px;
+  transition: 0.5s;
+}
+
+.input-password:hover,
+.input-password:focus,
+.input-username:hover,
+.input-username:focus {
+  border-color: #4cd137;
+  transition: 0.5s;
+  width: 250px;
+}
+
+.submit-button {
+  background: none;
+  font-family: Courier, monospace;
+
+  width: 150px;
+
+  outline: none;
+  padding: 5px;
+  padding-bottom: 5px;
+  color: #686868;
+  font-size: 15px;
+  text-align: center;
+
+  border-radius: 50px;
+  border-color: #2980b9;
+  border-width: 3px;
+  transition: 0.5s;
+}
+
+.submit-button:hover {
+  border-color: #4cd137;
+  transition: 0.5s;
+  width: 200px;
+}
+
+.information {
+  margin-top: 30px;
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  color: #686868;
+}

@@ -7,3 +7,5 @@ Button-Text-Color: #464646
 
 Button-Border: #2980b9
 Button-Border-Hover: #4cd137
+
+Box-Shadow: rgba(22, 36, 36, 0.76) 6px 6px
