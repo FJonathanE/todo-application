@@ -122,7 +122,16 @@ app.get("/todo", (req, res) => {
   console.log(req.cookies.userid + " " + req.cookies.logged_in);
 
   if (req.cookies.logged_in == "true" && req.cookies.userid != null) {
-    res.render("todo", { userid: req.cookies.userid });
+    connection.query(
+      `SELECT * FROM userdata WHERE userid='${req.cookies.userid}'`,
+      (error, results, fields) => {
+        if (results[0] == null) {
+          res.redirect("/login");
+        } else {
+          res.render("todo", { userid: req.cookies.userid });
+        }
+      }
+    );
     return;
   } else {
     res.redirect("/login");
@@ -135,19 +144,21 @@ app.get("/createaccount", (req, res) => {
       .alphanum()
       .min(5)
       .max(50),
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{5,50}$")),
 
     repeat_password: Joi.ref("password"),
   });
 
   let object = {};
+  object.error = "";
 
   if (
     !req.query.username ||
     !req.query.password ||
     !req.query.repeat_password
   ) {
-    object.tried_login = false;
+    object.error = "Du musst einen Benutzernamen und ein Passwort angeben.";
+
     res.render("createaccount", object);
     return;
   }
@@ -158,12 +169,58 @@ app.get("/createaccount", (req, res) => {
 
   let result_username = shema.validate({ username });
   let result_password = shema.validate({ password });
-  let result_repeat_password = shema.validate({ repeat_password });
+  let result_repeat_password = shema.validate({ repeat_password, password });
   let result_all = shema.validate({ username, password, repeat_password });
 
-  console.log(result_all);
+  connection.query(
+    `SELECT * FROM userdata WHERE username='${username}'`,
+    (error1, results1, fields1) => {
+      if (error1) {
+        throw error1;
+      }
 
-  res.render("createaccount", object);
+      if (result_repeat_password.error) {
+        object.error = "Du musst das Passwort noch einmal angeben.";
+      }
+
+      console.log(result_repeat_password);
+
+      if (result_password.error) {
+        object.error =
+          "Das Passwort darf nur Groß- und Kleinbuchstaben und Zahlen enthalten und muss zwischen 5 und 50 Zeichen lang sein.";
+      }
+      if (results1[0] != null) {
+        object.error = "account already exists";
+      }
+
+      if (result_username.error) {
+        object.error =
+          "Der Benutzername darf nur Groß- und Kleinbuchstaben und Zahlen enthalten und muss zwischen 5 und 50 Zeichen lang sein.";
+      }
+
+      if (object.error === "") {
+        const { v4: uuidv4 } = require("uuid");
+
+        console.log(
+          `Created new user with username: ${username} and password: ${password}`
+        );
+
+        connection.query(
+          `INSERT INTO userdata (userid, username, password, todos) VALUES ('${uuidv4()}', '${username}', '${password}', 'fec3669a-80f1-4741-9a4c-4da8cbf0569b;Wellcome!|')`,
+          (error2, results2, fields2) => {
+            if (error2) {
+              throw error2;
+            }
+
+            res.redirect("/login?account_creation=true");
+            return;
+          }
+        );
+      } else {
+        res.render("createaccount", object);
+      }
+    }
+  );
 });
 
 app.get("/logout", (req, res) => {
@@ -177,6 +234,17 @@ app.get("/login", (req, res) => {
 
   console.log("Signed: " + JSON.stringify(req.signedCookies));
   console.log("Unsigned: " + JSON.stringify(req.cookies));
+
+  if (req.query.account_creation != null) {
+    if (req.query.account_creation == "true") {
+      object.account_creation = true;
+      res.render("login", object);
+      console.log("Came from Account-Creation");
+      return;
+    }
+  }
+
+  object.account_creation = false;
 
   if (!(req.query.username && req.query.password)) {
     object.tried_login = false;
@@ -201,7 +269,7 @@ app.get("/login", (req, res) => {
         throw error;
       }
 
-      if (results == []) {
+      if (results[0] == null) {
         object.account_exists = false;
       } else {
         object.account_exists = true;

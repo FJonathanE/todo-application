@@ -36,12 +36,22 @@
             value="Einloggen"
           />
         </p>
-        <% if (!tried_login) { %>
+        <% if (account_creation != null && account_creation == true) { %>
+        <p class="success">
+          Deine Account-Erstellung war erfolgreich. Melde dich nun mit dem
+          Nutzernamen und dem Passwort an.
+        </p>
+        <% } else if (!tried_login) { %>
         <p class="error">
           Du musst einen Nutzernamen und ein Passwort angeben.
         </p>
         <% } else if (tried_login && !account_exists) { %>
-        <p class="error">Ein Account mit diesem Nutzernamen existiert nicht.</p>
+        <p class="error">
+          Ein Account mit diesem Nutzernamen existiert nicht.
+          <a href="http://localhost:3000/createaccount" class="error"
+            >Gelange mit diesem Link zur Account-Erstellungs-Seite.</a
+          >
+        </p>
         <% } else if (tried_login && account_exists && !password_right) { %>
         <p class="error">
           Das Passwort für den angegebenen Benutzer ist falsch.

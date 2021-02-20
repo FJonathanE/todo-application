@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account-Erstellung</title>
+  </head>
+  <body>
+    <div class="wrapper" id="wrapper">
+      <form class="form" id="form">
+        <h1 class="header">Login</h1>
+        <p>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="username"
+            placeholder="Benutzername"
+          />
+        </p>
+        <p>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="password"
+            placeholder="Passwort"
+          />
+        </p>
+        <p>
+          <input
+            type="password"
+            name="repeat_password"
+            id="repeat_password"
+            class="password"
+            placeholder="Passwort wiederholen"
+          />
+        </p>
+        <p>
+          <input
+            type="submit"
+            class="submit-button"
+            id="submit-button"
+            value="Erstellen"
+          />
+        </p>
+        <% if (error && error == "account already exists") { %>
+        <p class="error">
+          Ein Account mit diesem Nutzernamen existiert bereits.
+          <a href="http://localhost:3000/login" class="error"
+            >Gelange mit diesem Link zur Login-Seite.</a
+          >
+        </p>
+        <% } else if (error){ %>
+        <p class="error"><%= error %></p>
+        <% } %>
+      </form>
+    </div>
+
+    <script src="/assets/javascript/cookie_utils.js"></script>
+    <link rel="stylesheet" href="assets/css/login.css" />
+  </body>
+</html>
