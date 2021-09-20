@@ -117,10 +117,6 @@ app.delete("/api/todos/:userid/:todoid", (req, res) => {
 // \/ --------------- PAGES --------------- \/
 
 app.get("/todo", (req, res) => {
-  console.log(req.cookies);
-
-  console.log(req.cookies.userid + " " + req.cookies.logged_in);
-
   if (req.cookies.logged_in == "true" && req.cookies.userid != null) {
     connection.query(
       `SELECT * FROM userdata WHERE userid='${req.cookies.userid}'`,
@@ -182,8 +178,6 @@ app.get("/createaccount", (req, res) => {
       if (result_repeat_password.error) {
         object.error = "Du musst das Passwort noch einmal angeben.";
       }
-
-      console.log(result_repeat_password);
 
       if (result_password.error) {
         object.error =

@@ -48,9 +48,6 @@
         <% } else if (tried_login && !account_exists) { %>
         <p class="error">
           Ein Account mit diesem Nutzernamen existiert nicht.
-          <a href="http://localhost:3000/createaccount" class="error"
-            >Gelange mit diesem Link zur Account-Erstellungs-Seite.</a
-          >
         </p>
         <% } else if (tried_login && account_exists && !password_right) { %>
         <p class="error">
@@ -65,6 +62,12 @@
           >zur Todo-Seite gelangen.
         </p>
         <% } %>
+        <br />
+        <p>
+          <a href="/createaccount" class="information"
+            >Klicke hier, falls noch kein Account besitzt.</a
+          >
+        </p>
       </form>
     </div>
 

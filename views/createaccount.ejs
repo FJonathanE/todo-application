@@ -9,7 +9,7 @@
   <body>
     <div class="wrapper" id="wrapper">
       <form class="form" id="form">
-        <h1 class="header">Login</h1>
+        <h1 class="header">Create Account</h1>
         <p>
           <input
             type="text"
@@ -55,6 +55,12 @@
         <% } else if (error){ %>
         <p class="error"><%= error %></p>
         <% } %>
+
+        <p>
+          <a href="/createaccount" class="information"
+            >Klicke hier, falls du schon ein Account hast.</a
+          >
+        </p>
       </form>
     </div>
 
